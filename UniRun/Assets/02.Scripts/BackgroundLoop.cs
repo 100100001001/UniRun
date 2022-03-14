@@ -1,38 +1,38 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¿ŞÂÊ ³¡À¸·Î ÀÌµ¿ÇÑ ¹è°æÀ» ¿À¸¥ÂÊ ³¡À¸·Î Àç¹èÄ¡ Ã³¸®
+// ì™¼ìª½ ëìœ¼ë¡œ ì´ë™í•œ ë°°ê²½ì„ ì˜¤ë¥¸ìª½ ëìœ¼ë¡œ ì¬ë°°ì¹˜ ì²˜ë¦¬
 public class BackgroundLoop : MonoBehaviour
 {
-    // ¹è°æÀÇ °¡·Î ±æÀÌ
+    // ë°°ê²½ì˜ ê°€ë¡œ ê¸¸ì´
     private float width;
 
     // Unity Event Method
     private void Awake()
     {
-        // Awake() ¸Ş¼­µå´Â Start() ¸Ş¼­µåÃ³·³ ÃÊ±â 1È¸ ÀÚµ¿ ½ÇÇàµÇ´Â À¯´ÏÆ¼ ÀÌº¥Æ® ¸Ş¼­µå
-        // ÇÏÁö¸¸, Start() ¸Ş¼­µåº¸´Ù ½ÇÇà ½ÃÁ¡ÀÌ ÇÑ ÇÁ·¹ÀÓ ´õ ºü¸£´Ù
-        // ÂüÁ¶ÇÏ¼¼¿ä : Unity Method LifeCycle
+        // Awake() ë©”ì„œë“œëŠ” Start() ë©”ì„œë“œì²˜ëŸ¼ ì´ˆê¸° 1íšŒ ìë™ ì‹¤í–‰ë˜ëŠ” ìœ ë‹ˆí‹° ì´ë²¤íŠ¸ ë©”ì„œë“œ
+        // í•˜ì§€ë§Œ, Start() ë©”ì„œë“œë³´ë‹¤ ì‹¤í–‰ ì‹œì ì´ í•œ í”„ë ˆì„ ë” ë¹ ë¥´ë‹¤
+        // ì°¸ì¡°í•˜ì„¸ìš” : Unity Method LifeCycle
 
-        // °¡·Î ±æÀÌ¸¦ ÃøÁ¤
-        // BoxCollider2D ÄÄÆ÷³ÍÆ®ÀÇ Size ÇÊµåÀÇ X °ªÀ» °¡·Î ±æÀÌ·Î »ç¿ë
+        // ê°€ë¡œ ê¸¸ì´ë¥¼ ì¸¡ì •
+        // BoxCollider2D ì»´í¬ë„ŒíŠ¸ì˜ Size í•„ë“œì˜ X ê°’ì„ ê°€ë¡œ ê¸¸ì´ë¡œ ì‚¬ìš©
         BoxCollider2D backgroundCollider = GetComponent<BoxCollider2D>();
         width = backgroundCollider.size.x;
     }
 
     void Update()
     {
-        // ÇöÀç À§Ä¡°¡ ¿øÁ¡¿¡¼­ ¿ŞÂÊÀ¸·Î width ÀÌ»ó ÀÌµ¿ÇßÀ» ¶§ À§Ä¡¸¦ Àç¹èÄ¡
+        // í˜„ì¬ ìœ„ì¹˜ê°€ ì›ì ì—ì„œ ì™¼ìª½ìœ¼ë¡œ width ì´ìƒ ì´ë™í–ˆì„ ë•Œ ìœ„ì¹˜ë¥¼ ì¬ë°°ì¹˜
         if (transform.position.x <= -width)
         {
             Reposition();
         }
     }
 
-    void Reposition() // À§Ä¡¸¦ Àç¹èÄ¡ÇÏ´Â ¸Ş¼­µå
+    void Reposition() // ìœ„ì¹˜ë¥¼ ì¬ë°°ì¹˜í•˜ëŠ” ë©”ì„œë“œ
     {
-        // ÇöÀç À§Ä¡¿¡¼­ ¿À¸¥ÂÊÀ¸·Î °¡·Î ±æÀÌ * 2 ¸¸Å­ ÀÌµ¿
+        // í˜„ì¬ ìœ„ì¹˜ì—ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°€ë¡œ ê¸¸ì´ * 2 ë§Œí¼ ì´ë™
         Vector2 offset = new Vector2(width * 2f, 0);
         transform.position = (Vector2)transform.position + offset;
         // width : 20.48 * 2 = 40.48

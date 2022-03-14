@@ -1,31 +1,31 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¹ßÆÇÀ¸·Î¼­ ÇÊ¿äÇÑ µ¿ÀÛÀ» ´ãÀº ½ºÅ©¸³Æ®
+// ë°œíŒìœ¼ë¡œì„œ í•„ìš”í•œ ë™ìž‘ì„ ë‹´ì€ ìŠ¤í¬ë¦½íŠ¸
 public class Platform : MonoBehaviour
 {
-    // Àå¾Ö¹° ¿ÀºêÁ§Æ®µéÀ» ´ã´Â ¹è¿­
+    // ìž¥ì• ë¬¼ ì˜¤ë¸Œì íŠ¸ë“¤ì„ ë‹´ëŠ” ë°°ì—´
     public GameObject[] obstacles;
-    // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ¹â¾Ò´ÂÁö
+    // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ë°Ÿì•˜ëŠ”ì§€
     private bool stepped = false;
 
-    // »õ·Î¿î À¯´ÏÆ¼ ÀÌº¥Æ® ¸Þ¼­µå¸¦ È®ÀÎ
+    // ìƒˆë¡œìš´ ìœ ë‹ˆí‹° ì´ë²¤íŠ¸ ë©”ì„œë“œë¥¼ í™•ì¸
     private void OnEnable()
     {
-        // Awake()³ª Start() °°Àº À¯´ÏÆ¼ ÀÌº¥Æ® ¸Þ¼­µå
-        // Start() ¸Þ¼­µåÃ³·³ ÄÄÆ÷³ÍÆ®°¡ È°¼ºÈ­µÉ ¶§ ÀÚµ¿À¸·Î ÇÑ ¹ø ½ÇÇàµÇ´Â ¸Þ¼­µå
-        // ±×·±µ¥, Ã³À½ ÇÑ¹ø¸¸ ½ÇÇàµÇ´Â Start() ¸Þ¼­µå¿Í ´Þ¸®
-        // OnEnable() ¸Þ¼­µå´Â ÄÄÆ÷³ÍÆ®°¡ È°¼ºÈ­µÉ ¶§¸¶´Ù ¸Å¹ø ´Ù½Ã ½ÇÇàµÊ
-        // ÄÄÆ÷³ÍÆ®¸¦ ²ô°í ´Ù½Ã ÄÑ´Â ¹æ½ÄÀ¸·Î Àç½ÇÇàÇÒ ¼ö ÀÖÀ½
+        // Awake()ë‚˜ Start() ê°™ì€ ìœ ë‹ˆí‹° ì´ë²¤íŠ¸ ë©”ì„œë“œ
+        // Start() ë©”ì„œë“œì²˜ëŸ¼ ì»´í¬ë„ŒíŠ¸ê°€ í™œì„±í™”ë  ë•Œ ìžë™ìœ¼ë¡œ í•œ ë²ˆ ì‹¤í–‰ë˜ëŠ” ë©”ì„œë“œ
+        // ê·¸ëŸ°ë°, ì²˜ìŒ í•œë²ˆë§Œ ì‹¤í–‰ë˜ëŠ” Start() ë©”ì„œë“œì™€ ë‹¬ë¦¬
+        // OnEnable() ë©”ì„œë“œëŠ” ì»´í¬ë„ŒíŠ¸ê°€ í™œì„±í™”ë  ë•Œë§ˆë‹¤ ë§¤ë²ˆ ë‹¤ì‹œ ì‹¤í–‰ë¨
+        // ì»´í¬ë„ŒíŠ¸ë¥¼ ë„ê³  ë‹¤ì‹œ ì¼œëŠ” ë°©ì‹ìœ¼ë¡œ ìž¬ì‹¤í–‰í•  ìˆ˜ ìžˆìŒ
 
-        // ¹ßÆÇÀ» ¸®¼ÂÇÏ´Â Ã³¸®
+        // ë°œíŒì„ ë¦¬ì…‹í•˜ëŠ” ì²˜ë¦¬
         stepped = false;
 
-        // Àå¾Ö¹°ÀÇ ¼ö¸¸Å­ ·çÇÁ
+        // ìž¥ì• ë¬¼ì˜ ìˆ˜ë§Œí¼ ë£¨í”„
         for (int i = 0; i < obstacles.Length; i++)
         {
-            // ÇöÀç ¼ø¹øÀÇ Àå¾Ö¹°À» 1/3ÀÇ È®·ü·Î È°¼ºÈ­
+            // í˜„ìž¬ ìˆœë²ˆì˜ ìž¥ì• ë¬¼ì„ 1/3ì˜ í™•ë¥ ë¡œ í™œì„±í™”
             if (Random.Range(0, 3) == 0)
             {
                 obstacles[i].SetActive(true);
@@ -39,14 +39,14 @@ public class Platform : MonoBehaviour
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ÀÚ½ÅÀ» ¹â¾ÒÀ» ¶§ Á¡¼ö¸¦ Ãß°¡ÇÏ´Â Ã³¸®
+    // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ìžì‹ ì„ ë°Ÿì•˜ì„ ë•Œ ì ìˆ˜ë¥¼ ì¶”ê°€í•˜ëŠ” ì²˜ë¦¬
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ãæµ¹ÇÑ »ó´ë¹æÀÇ ÅÂ±×°¡ PlayerÀÌ°í
-        // ÀÌÀü¿¡ ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ¹âÁö ¾Ê¾Ò´Ù¸é
+        // ì¶©ëŒí•œ ìƒëŒ€ë°©ì˜ íƒœê·¸ê°€ Playerì´ê³ 
+        // ì´ì „ì— í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ë°Ÿì§€ ì•Šì•˜ë‹¤ë©´
         if (collision.collider.tag == "Player" && !stepped)
         {
-            // Á¡¼ö¸¦ Ãß°¡ÇÏ°í ¹âÈû »óÅÂ¸¦ ÂüÀ¸·Î º¯°æ
+            // ì ìˆ˜ë¥¼ ì¶”ê°€í•˜ê³  ë°Ÿíž˜ ìƒíƒœë¥¼ ì°¸ìœ¼ë¡œ ë³€ê²½
             stepped = true;
             GameManager.instance.AddScore(1);
         }
