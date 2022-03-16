@@ -1,77 +1,165 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// °ÔÀÓ¿À¹ö »óÅÂ¸¦ Ç¥ÇöÇÏ°í, °ÔÀÓ Á¡¼ö¿Í UI¸¦ °ü¸®ÇÏ´Â ¸Å´ÏÀú
-// ¾À¿¡´Â ´Ü ÇÏ³ªÀÇ °ÔÀÓ ¸Å´ÏÀú¸¸ Á¸ÀçÇÒ ¼ö ÀÖÀ½ 
+// ê²Œì„ì˜¤ë²„ ìƒíƒœë¥¼ í‘œí˜„í•˜ê³ , ê²Œì„ ì ìˆ˜ì™€ UIë¥¼ ê´€ë¦¬í•˜ëŠ” ë§¤ë‹ˆì €
+// ì”¬ì—ëŠ” ë‹¨ í•˜ë‚˜ì˜ ê²Œì„ ë§¤ë‹ˆì €ë§Œ ì¡´ì¬í•  ìˆ˜ ìˆìŒ 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // ½Ì±ÛÅÏÀ» ÇÒ´çÇÒ Àü¿ª º¯¼ö
+    public static GameManager instance; // ì‹±ê¸€í„´ì„ í• ë‹¹í•  ì „ì—­ ë³€ìˆ˜
 
-    public bool isGameover = false; // °ÔÀÓ¿À¹ö »óÅÂ
-    public Text scoreText; // Á¡¼ö¸¦ Ãâ·ÂÇÒ UI ÅØ½ºÆ®
-    public GameObject gameoverUI; // °ÔÀÓ¿À¹ö½Ã È°¼ºÈ­ÇÒ UI ¿ÀºêÁ§Æ®
+    public bool isGameover = false; // ê²Œì„ì˜¤ë²„ ìƒíƒœ
+    public Text scoreText; // ì ìˆ˜ë¥¼ ì¶œë ¥í•  UI í…ìŠ¤íŠ¸
+    public GameObject gameoverUI; // ê²Œì„ì˜¤ë²„ì‹œ í™œì„±í™”í•  UI ì˜¤ë¸Œì íŠ¸
 
-    private int score = 0; // °ÔÀÓ Á¡¼ö
+    private int score = 0; // ê²Œì„ ì ìˆ˜
 
-    // °ÔÀÓ šë°¡°ú µ¿½Ã¿¡ ½Ì±ÛÅÏÀ» ±¸¼º
+    public GameObject menuPanel; // ë©”ë‰´ íŒ¨ë„ ë³€ìˆ˜
+
+    public int hpCount = 2; // ì‹¤ì œ ì‚¬ìš©ì ìƒëª…ë ¥
+    public Text hpText; // ì‚¬ìš©ìì—ê²Œ ë³´ì—¬ì§ˆ ìƒëª…ë ¥ UI
+
+    // test
+    public Text lifeText;
+    private int life = 2;
+
+    // ê²Œì„ ì‹œì‘ê³¼ ë™ì‹œì— ì‹±ê¸€í„´ì„ êµ¬ì„±
     private void Awake()
     {
-        // ½Ì±ÛÅÏ º¯¼ö instance°¡ ºñ¾î ÀÖ³ª¿ä?
+        // ì‹±ê¸€í„´ ë³€ìˆ˜ instanceê°€ ë¹„ì–´ ìˆë‚˜ìš”?
         if (instance == null)
         {
-            // instance°¡ ºñ¾î ÀÖ´Ù¸é ±×°÷¿¡ ³» ÀÚ½ÅÀ» ÇÒ´çÇØÁà
+            // instanceê°€ ë¹„ì–´ ìˆë‹¤ë©´ ê·¸ê³³ì— ë‚´ ìì‹ ì„ í• ë‹¹í•´ì¤˜
             instance = this;
         }
         else
         {
-            // instance¿¡ ÀÌ¹Ì ´Ù¸¥ GameManager ¿ÀºêÁ§Æ®°¡ ÇÒ´çµÇ¾î ÀÖ´Ù¸é...
+            // instanceì— ì´ë¯¸ ë‹¤ë¥¸ GameManager ì˜¤ë¸Œì íŠ¸ê°€ í• ë‹¹ë˜ì–´ ìˆë‹¤ë©´...
 
-            // ¾À¿¡ µÎ °³ ÀÌ»óÀÇ GameManager ¿ÀºêÁ§Æ®°¡ Á¸ÀçÇÑ´Ù´Â ÀÇ¹Ì.
-            // ½Ì±ÛÅÏ ¿ÀºêÁ§Æ®´Â ÇÏ³ª¸¸ Á¸ÀçÇØ¾ß ÇÏ¹Ç·Î
-            // ÀÚ½ÅÀÇ °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ ÆÄ±«
+            // ì”¬ì— ë‘ ê°œ ì´ìƒì˜ GameManager ì˜¤ë¸Œì íŠ¸ê°€ ì¡´ì¬í•œë‹¤ëŠ” ì˜ë¯¸.
+            // ì‹±ê¸€í„´ ì˜¤ë¸Œì íŠ¸ëŠ” í•˜ë‚˜ë§Œ ì¡´ì¬í•´ì•¼ í•˜ë¯€ë¡œ
+            // ìì‹ ì˜ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ íŒŒê´´
             Destroy(gameObject);
         }
     }
 
-    // °ÔÀÓ¿À¹ö »óÅÂ¿¡¼­ °ÔÀÓÀ» Àç½ÃÀÛÇÒ ¼ö ÀÖ°Ô ÇÏ´Â Ã³¸®
+    private void Start()
+    {
+        // ì‚¬ìš©ìì—ê²Œ ë³´ì—¬ì§ˆ ìƒëª…ë ¥ì„ ì‹¤ì œ ìƒëª…ë ¥ìœ¼ë¡œ ë“±ë¡
+        hpText.text = hpCount.ToString();
+    }
+
+    // ê²Œì„ì˜¤ë²„ ìƒíƒœì—ì„œ ê²Œì„ì„ ì¬ì‹œì‘í•  ìˆ˜ ìˆê²Œ í•˜ëŠ” ì²˜ë¦¬
     void Update()
     {
-        // °ÔÀÓ¿À¹ö »óÅÂ¿¡¼­ ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°À» Å¬¸¯ÇÑ´Ù¸é
+        // ê²Œì„ì˜¤ë²„ ìƒíƒœì—ì„œ ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì„ í´ë¦­í•œë‹¤ë©´
         if (isGameover && Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // ÇöÀç È°¼ºÈ­ µÇ¾î ÀÖ´Â ¾ÀÀÇ ÀÌ¸§À» °¡Á®¿Í~
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // í˜„ì¬ í™œì„±í™” ë˜ì–´ ìˆëŠ” ì”¬ì˜ ì´ë¦„ì„ ê°€ì ¸ì™€~
             // SceneManager.LoadScene("Main");
         }
     }
 
-    // Á¡¼ö¸¦ Áõ°¡½ÃÅ°´Â ¸Ş¼­µå
+    // ì ìˆ˜ë¥¼ ì¦ê°€ì‹œí‚¤ëŠ” ë©”ì„œë“œ
     public void AddScore(int newScore)
     {
-        // °ÔÀÓ¿À¹ö°¡ ¾Æ´Ï¶ó¸é
+        // ê²Œì„ì˜¤ë²„ê°€ ì•„ë‹ˆë¼ë©´
         if (!isGameover)
         {
-            // Á¡¼ö¸¦ Áõ°¡
+            // ì ìˆ˜ë¥¼ ì¦ê°€
             score += newScore;
             scoreText.text = "Score : " + score;
         }
 
-        // °°Àº ÀÇ¹Ì
+        // ê°™ì€ ì˜ë¯¸
         //if (isGameover) return;
 
         //score += newScore;
         //scoreText.text = "Score : " + score;
     }
 
-    // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ »ç¸Á ½Ã °ÔÀÓ¿À¹ö¸¦ ½ÇÇàÇÏ´Â ¸Ş¼­µå
+    // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ì‚¬ë§ ì‹œ ê²Œì„ì˜¤ë²„ë¥¼ ì‹¤í–‰í•˜ëŠ” ë©”ì„œë“œ
 
     public void OnPlayerDead()
     {
-        // ÇöÀç »óÅÂ¸¦ °ÔÀÓ¿À¹ö »óÅÂ·Î º¯°æ
+        // í˜„ì¬ ìƒíƒœë¥¼ ê²Œì„ì˜¤ë²„ ìƒíƒœë¡œ ë³€ê²½
         isGameover = true;
-        // °ÔÀÓ¿À¹ö UI¸¦ È°¼ºÈ­
+        // ê²Œì„ì˜¤ë²„ UIë¥¼ í™œì„±í™”
         gameoverUI.SetActive(true);
+    }
+
+    public void OnMenu()
+    {
+        menuPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void OffMenu()
+    {
+        menuPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
+    }
+
+    // ë‹¤ë¥¸ ë°©ë²•1
+    public void MenuPanelControl(bool isActive)
+    {
+        menuPanel.SetActive(isActive);
+    }
+
+    // ë‹¤ë¥¸ ë°©ë²•2
+    public void UIControl(string type)
+    {
+        switch (type)
+        {
+            case "menuOn":
+                menuPanel.SetActive(true);
+                Time.timeScale = 0f;
+                break;
+            case "menuOff":
+                menuPanel.SetActive(false);
+                Time.timeScale = 1f;
+                break;
+            case "restart":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Time.timeScale = 1f;
+                break;
+            case "exit":
+                Application.Quit();
+                break;
+        }
+    }
+
+    public bool Crash()
+    {
+        //hpCount--;
+        //hpText.text = hpCount.ToString();
+        hpText.text = "" + --hpCount;
+        if (hpCount <= 0) return true;
+        return false;
+    }
+
+    // test
+    public void Life()
+    {
+        // ê²Œì„ì˜¤ë²„ê°€ ì•„ë‹ˆë¼ë©´
+        if (!isGameover)
+        {
+            // ìƒëª… ê°ì†Œ
+            life--;
+            lifeText.text = ""+life;
+        }
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Dead
   - Point
+  - Obstacle
+  - Spark
   layers:
   - Default
   - TransparentFX

@@ -8,7 +8,7 @@ public class Platform : MonoBehaviour
     // 장애물 오브젝트들을 담는 배열
     public GameObject[] obstacles;
     // Apple
-    public GameObject[] apples;
+    //public GameObject[] apples;
 
     // 플레이어 캐릭터가 밟았는지
     private bool stepped = false;
@@ -32,12 +32,12 @@ public class Platform : MonoBehaviour
             if (Random.Range(0, 3) == 0)
             {
                 obstacles[i].SetActive(true);
-                apples[i].SetActive(true);
+                //apples[i].SetActive(true);
             }
             else
             {
                 obstacles[i].SetActive(false);
-                apples[i].SetActive(false);
+                //apples[i].SetActive(false);
             }
 
             // obstacles[i].SetActive(Random.Range(0, 3) == 0 ? true : false);

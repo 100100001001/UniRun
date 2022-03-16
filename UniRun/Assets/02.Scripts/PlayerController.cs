@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     // 사용할 애니메이터 컴포넌트
     private Animator animator;
 
+    // test
+    private int deadcnt = 0;
+
     void Start()
     {
         // 전역변수의 초기화 진행
@@ -93,6 +96,19 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.OnPlayerDead();
     }
 
+    // test
+    void Ob()
+    {
+        if (deadcnt >= 3)
+        {
+            deadcnt = 0;
+            Die();
+            return;
+        }
+
+        deadcnt++;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // 바닥에 닿자마자 감지하는 처리
@@ -124,14 +140,26 @@ public class PlayerController : MonoBehaviour
         // 트리거 콜라이더를 가진 장애물과의 충돌 감지
 
         // 충돌한 상대방의 태그가 Dead 이면서, 아직 사망하지 않았다면
-        if (collision.tag == "Dead" && !isDead)
+        if (collision.tag == "Dead" && !isDead )
         {
             Die();
         }
-
-        if (collision.tag == "Point" && !isDead)
+        else if (collision.tag == "Spark" && !isDead)
         {
-            GameManager.instance.AddScore(50);
+            if (GameManager.instance.Crash()) Die(); 
+            
+            //if (GameManager.instance.hpCount == 0) Die();
         }
+
+        // test
+        //if (collision.tag == "Obstacle" && !isDead)
+        //{
+        //    Ob();
+        //}
+
+        //if (collision.tag == "Point" && !isDead)
+        //{
+        //    GameManager.instance.AddScore(50);
+        //}
     }
 }
