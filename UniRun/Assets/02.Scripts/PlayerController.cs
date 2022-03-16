@@ -128,5 +128,10 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        if (collision.tag == "Point" && !isDead)
+        {
+            GameManager.instance.AddScore(50);
+        }
     }
 }
