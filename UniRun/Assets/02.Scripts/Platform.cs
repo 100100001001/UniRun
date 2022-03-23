@@ -13,6 +13,9 @@ public class Platform : MonoBehaviour
     // 플레이어 캐릭터가 밟았는지
     private bool stepped = false;
 
+    // 코인(아이템류) 오브젝트들을 담는 배열
+    public GameObject[] coins;
+
     // 새로운 유니티 이벤트 메서드를 확인
     private void OnEnable()
     {
@@ -41,6 +44,20 @@ public class Platform : MonoBehaviour
             }
 
             // obstacles[i].SetActive(Random.Range(0, 3) == 0 ? true : false);
+        }
+
+        // 코인(아이템류)의 수만큼 루프
+        for (int i = 0; i < coins.Length; i++)
+        {
+            // 현재 순번의 코인(아이템류) 1/5의 확률로 활성화
+            if (Random.Range(0, 5) == 0)
+            {
+                coins[i].SetActive(true);
+            }
+            else
+            {
+                coins[i].SetActive(false);
+            }
         }
     }
 

@@ -44,8 +44,15 @@ public class PlatformSpawner : MonoBehaviour
 
     // 초반에 생성한 발판을 화면 밖에 숨겨둘 위치
     private Vector2 poolPosition = new Vector2(0, -25);
+    private Vector2 poolPositionApple = new Vector2(0, -30);
     // 마지막 배치 시점
     private float lastSpawnTime;
+
+    // test
+    //public GameObject applePrefab;
+    //private GameObject[] apples;
+    //public float appleXMin = -1.5f;
+    //public float appleXMax = 1.5f;
 
     void Start()
     {
@@ -53,6 +60,7 @@ public class PlatformSpawner : MonoBehaviour
 
         // count만큼의 공간을 가지는 새로운 발판 배열 생성
         platforms = new GameObject[count];
+        //apples = new GameObject[count];
 
         // count만큼 루프하면서 발판 생성
         for (int i = 0; i < count; i++)
@@ -62,6 +70,9 @@ public class PlatformSpawner : MonoBehaviour
             // 생성된 발판을 platforms 배열에 할당
             platforms[i] = Instantiate(platformPrefab, poolPosition, Quaternion.identity);
             // Quaternion.Euler(new Vector3(0, 0, 0));
+
+            // test
+            //apples[i] = Instantiate(applePrefab, poolPositionApple, Quaternion.identity);
         }
 
         // 마지막 배치 시점 초기화
@@ -88,14 +99,19 @@ public class PlatformSpawner : MonoBehaviour
 
             // 배치할 위치의 높이를 yMin과 yMax 사이에서 랜덤 가져오기
             float yPos = Random.Range(yMin, yMax);
+            //float appleXPos = Random.Range(appleXMin, appleXMax);
+            //float appleYPos = Random.Range(yPos, yMax) + 3f;
 
             // 사용할 현재 순번의 발판 게임 오브젝트를 비활성화하고
             // 바로 즉시 다시 활성화. 이 때, 발판의 Platform 컴포넌트의 OnEnable() 메서드가 실행됨
             platforms[currentIndex].SetActive(false);
+            //apples[currentIndex].SetActive(false);
             platforms[currentIndex].SetActive(true);
+            //apples[currentIndex].SetActive(true);
 
             // 현재 순번의 발판을 화면 오른쪽에 재배치
             platforms[currentIndex].transform.position = new Vector2(xPos, yPos);
+            //apples[currentIndex].transform.position = new Vector2(appleXPos, appleYPos);
 
             // 순번 넘기기
             currentIndex++;
